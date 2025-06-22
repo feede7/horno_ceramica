@@ -359,9 +359,13 @@ void loop() {
     if (valor_comparar >= TEMPERATURA_FINAL_ESTADO_11){
       // Ver cuánto tarda en llegar a 1000, y después vamos a esperar  (1060 / 1000 - 1) * ese_tiempo
       tiempo_hasta_1000 = current_minutos - tiempo_inicial;
-      tiempo_hasta_1060 = tiempo_hasta_1000 * (1060 / 1000 - 1);
+      tiempo_hasta_1060 = tiempo_hasta_1000 * 1060 / 1000 - tiempo_hasta_1000;
       tiempo_inicial = current_minutos;
       estado++;
+      Serial.print("Tiempo hasta 1000: ");
+      Serial.println(tiempo_hasta_1000);
+      Serial.print("Tiempo hasta 1060: ");
+      Serial.println(tiempo_hasta_1060);
     }
   }
   else if (estado == ESTADO_HASTA_1060) {
@@ -382,8 +386,16 @@ void loop() {
     if (current_minutos - tiempo_inicial >= TIEMPO_ENTRE_PASOS){
       estado++;
       potencia -= PASO_DE_ENFRIAMIENTO;
+      tiempo_inicial = current_minutos;
     }
-    if (valor_termocupla <= TEMPERATURA_DE_CORTE){
+    int valor_comparar;
+    if (PRUEBA){
+      valor_comparar = temperatura_objetivo_int;
+    }
+    else{
+      valor_comparar = valor_termocupla;
+    }
+    if (valor_comparar <= TEMPERATURA_DE_CORTE){
       potencia = 0;
       // Pasa al estado 15 para terminar
       // Es lo mismo que hacer estado = ULTIMO_ESTADO;
