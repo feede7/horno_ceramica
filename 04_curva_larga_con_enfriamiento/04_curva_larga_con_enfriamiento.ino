@@ -371,14 +371,13 @@ void loop() {
   else if (estado == ESTADO_HASTA_1060) {
     if (current_minutos - tiempo_inicial >= tiempo_hasta_1060){
       estado++;
-      potencia = 85;
       tiempo_inicial = current_minutos;
     }
   }
   else if (estado == ESTADO_MESETA_1060) {
     if (current_minutos - tiempo_inicial >= TIEMPO_ESTADO_13){
       estado++;
-      potencia = 75;
+      potencia = 85;
       tiempo_inicial = current_minutos;
     }
   }
