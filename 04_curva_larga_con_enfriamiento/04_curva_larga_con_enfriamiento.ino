@@ -384,7 +384,6 @@ void loop() {
   }
   else if (estado == ENFRIAMIENTO) {
     if (current_minutos - tiempo_inicial >= TIEMPO_ENTRE_PASOS){
-      estado++;
       potencia -= PASO_DE_ENFRIAMIENTO;
       tiempo_inicial = current_minutos;
     }
