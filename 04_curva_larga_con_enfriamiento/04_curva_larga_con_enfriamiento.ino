@@ -194,7 +194,7 @@ void loop() {
   cronometro_horas = int(current_minutos / 60);
   temperatura_objetivo = temperatura_inicial + velocidad_temperatura * (current_minutos - tiempo_inicial);
   temperatura_objetivo_int = int(temperatura_objetivo);
- 
+
   if (currentMillis - ultimo_tiempo_temp >= TIEMPO_LECTURA_TEMP){
     if (PRUEBA){
       valor_termocupla = 0;
@@ -261,7 +261,7 @@ void loop() {
         lcd.print("0");
       }
       lcd.print(cronometro_minutos);
-      
+
       ultimo_cronometro_minutos = cronometro_minutos;
     }
     else if (cronometro_horas != ultimo_cronometro_horas) {
@@ -270,7 +270,7 @@ void loop() {
         lcd.print("0");
       }
       lcd.print(cronometro_horas);
-      
+
       ultimo_cronometro_horas = cronometro_horas;
     }
     else if (temperatura_objetivo_int != ultima_temperatura_objetivo) {
@@ -385,6 +385,8 @@ void loop() {
     }
     if (valor_termocupla <= TEMPERATURA_DE_CORTE){
       potencia = 0;
+      // Pasa al estado 15 para terminar
+      // Es lo mismo que hacer estado = ULTIMO_ESTADO;
       estado++;
     }
   }
