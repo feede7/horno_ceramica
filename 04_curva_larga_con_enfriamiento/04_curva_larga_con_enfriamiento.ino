@@ -163,10 +163,6 @@ void change_estado(bool cambiar_temp_inicial=HIGH){
       lcd.setCursor(9, 1);
       lcd.print(estado);
     }
-    else{
-      lcd.setCursor(8, 1);
-      lcd.print("FIN");
-    }
 }
 
 void setup() {
@@ -219,9 +215,9 @@ void loop() {
   else {
     // Actualiza el LCD si el valor cambió
     if (potencia != last_potencia) {
-      lcd.setCursor(1, 1);
+      lcd.setCursor(0, 1);
       lcd.print(potencia * 100 / MAXIMA_POTENCIA);
-      lcd.print(" %  ");
+      lcd.print("%  ");
       last_potencia = potencia;
     }
   }
@@ -351,7 +347,7 @@ void loop() {
     potencia = MAXIMA_POTENCIA;
     int valor_comparar;
     if (PRUEBA){
-      valor_comparar = current_segundos / 2;
+      valor_comparar = current_segundos * FACTOR_TIEMPO_PRUEBA / 20;
     }
     else{
       valor_comparar = valor_termocupla;
@@ -359,7 +355,7 @@ void loop() {
     if (valor_comparar >= TEMPERATURA_FINAL_ESTADO_11){
       // Ver cuánto tarda en llegar a 1000, y después vamos a esperar  (1060 / 1000 - 1) * ese_tiempo
       tiempo_hasta_1000 = current_minutos - tiempo_inicial;
-      tiempo_hasta_1060 = tiempo_hasta_1000 * 1060 / 1000 - tiempo_hasta_1000;
+      tiempo_hasta_1060 = tiempo_hasta_1000 * (1060 - 1000) / (1000 - temperatura_final);
       tiempo_inicial = current_minutos;
       estado++;
       Serial.print("Tiempo hasta 1000: ");
@@ -398,6 +394,8 @@ void loop() {
       // Pasa al estado 15 para terminar
       // Es lo mismo que hacer estado = ULTIMO_ESTADO;
       estado++;
+      lcd.setCursor(7, 1);
+      lcd.print("FIN");
     }
   }
 }
