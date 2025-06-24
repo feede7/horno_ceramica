@@ -344,6 +344,9 @@ void loop() {
   }
   else if (estado == ESTADO_HASTA_1000) {
     control_automatico = LOW;
+    ledState = HIGH;
+    digitalWrite(led_pin, ledState);
+    digitalWrite(horno_pin, ledState);
     potencia = MAXIMA_POTENCIA;
     int valor_comparar;
     if (PRUEBA){
@@ -389,7 +392,7 @@ void loop() {
     else{
       valor_comparar = valor_termocupla;
     }
-    if (valor_comparar <= TEMPERATURA_DE_CORTE){
+    if ((valor_comparar <= TEMPERATURA_DE_CORTE) || (potencia <= 10)){
       potencia = 0;
       // Pasa al estado 15 para terminar
       // Es lo mismo que hacer estado = ULTIMO_ESTADO;
