@@ -133,7 +133,7 @@ void showStartupMessage() {
   delay(1000);
 }
 
-void serial_salida(int valor1, int valor2, int valor3, int valor4, int valor5, int valor6){
+void serial_salida(long valor1, int valor2, int valor3, int valor4, int valor5, int valor6){
   Serial.print(valor1);
   Serial.print(",");
   Serial.print(valor2);
